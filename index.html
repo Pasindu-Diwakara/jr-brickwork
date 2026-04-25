@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR Brickwork & Pointing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --brick: #8B2500;
+  --brick-light: #B33A00;
+  --brick-dark: #5C1700;
+  --mortar: #D4C4A8;
+  --red: #CC2200;
+  --white: #FAF8F5;
+  --off-white: #F0EAE0;
+  --dark: #1A0A00;
+  --mid: #3D1A00;
+  --text: #2A1000;
+  --text-muted: #7A5A40;
+  --card-bg: rgba(255,255,255,0.92);
+  --nav-bg: rgba(250,248,245,0.95);
+  --shadow: rgba(90,30,0,0.15);
+  --cursor-color: #CC2200;
+}
+[data-theme="dark"] {
+  --white: #0F0500;
+  --off-white: #1A0A00;
+  --dark: #FAF8F5;
+  --mid: #D4C4A8;
+  --text: #F5EEE6;
+  --text-muted: #C4A882;
+  --card-bg: rgba(30,10,0,0.92);
+  --nav-bg: rgba(15,5,0,0.97);
+  --shadow: rgba(0,0,0,0.4);
+  --cursor-color: #FF5500;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Custom Cursor */
+* { cursor: none !important; }
+#cursor {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 20px; height: 20px;
+  border: 2px solid var(--cursor-color);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s, border-color .2s;
+  mix-blend-mode: multiply;
+}
+[data-theme="dark"] #cursor { mix-blend-mode: screen; }
+#cursor-dot {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 5px; height: 5px;
+  background: var(--cursor-color);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: transform .1s;
+}
+#cursor.hovering { width: 44px; height: 44px; background: rgba(204,34,0,0.12); }
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── Animated Brick Background ── */
+.brick-bg {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.brick-canvas {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  opacity: 0.06;
+}
+[data-theme="dark"] .brick-canvas { opacity: 0.04; }
+.brick-row { display: contents; }
+.brick-cell {
+  height: 38px; margin: 3px;
+  background: var(--brick);
+  border-radius: 2px;
+  animation: brickPulse var(--d,4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes brickPulse {
+  0%,100% { opacity: .5; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.04); }
+}
+
+/* ── Navigation ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--brick);
+  display: flex; align-items: center;
+  padding: 0 5%;
+  height: 68px;
+  transition: background .3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  color: var(--brick);
+  text-decoration: none;
+  flex: 0 0 auto;
+}
+.nav-logo-icon {
+  width: 38px; height: 38px;
+  background: var(--brick);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.1rem;
+}
+.nav-links {
+  display: flex; gap: 32px;
+  margin-left: auto;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem; font-weight: 500;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text); text-decoration: none;
+  position: relative; padding-bottom: 2px;
+  transition: color .2s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background: var(--brick);
+  transition: width .3s;
+}
+.nav-links a:hover { color: var(--brick); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  margin-left: 32px;
+  background: var(--brick); color: #fff !important;
+  padding: 8px 20px !important; border-radius: 2px;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important; letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  transition: background .2s, transform .1s !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--brick-light) !important; transform: translateY(-1px); color: #fff !important; }
+
+/* Dark mode toggle */
+.theme-toggle {
+  margin-left: 24px;
+  background: none; border: 1.5px solid var(--brick);
+  border-radius: 20px;
+  width: 52px; height: 28px;
+  position: relative;
+  transition: background .3s;
+  flex-shrink: 0;
+}
+.theme-toggle-knob {
+  position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--brick);
+  transition: transform .3s;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 10px;
+}
+[data-theme="dark"] .theme-toggle-knob { transform: translateX(24px); }
+
+/* Hamburger */
+.hamburger { display: none; background: none; border: none; padding: 4px; margin-left: 16px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--brick); margin: 5px 0; transition: .3s; }
+
+/* Mobile nav */
+.mobile-nav {
+  position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+  background: var(--nav-bg); backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--brick);
+  padding: 1.5rem 5%;
+  transform: translateY(-200%);
+  transition: transform .35s ease;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.mobile-nav.open { transform: translateY(0); }
+.mobile-nav a {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem;
+  font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text); text-decoration: none; padding: 8px 0;
+  border-bottom: 1px solid rgba(139,37,0,0.15);
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 8% 80px;
+  overflow: hidden;
+}
+.hero-content { max-width: 680px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(139,37,0,0.1);
+  border: 1px solid rgba(139,37,0,0.3);
+  border-radius: 2px;
+  padding: 6px 14px; margin-bottom: 28px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--brick);
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 0.92;
+  letter-spacing: 2px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.hero h1 span { color: var(--brick); display: block; }
+.hero-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 32px;
+}
+.hero p {
+  font-size: 1.05rem; line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 520px; margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--brick); color: #fff;
+  padding: 14px 28px; border-radius: 2px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  border: none;
+}
+.btn-primary:hover {
+  background: var(--brick-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139,37,0,0.3);
+}
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 2px solid var(--brick); color: var(--brick);
+  padding: 12px 28px; border-radius: 2px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; text-decoration: none;
+  transition: background .2s, color .2s, transform .15s;
+}
+.btn-outline:hover { background: var(--brick); color: #fff; transform: translateY(-2px); }
+
+.hero-stats {
+  display: flex; gap: 40px; margin-top: 56px; padding-top: 40px;
+  border-top: 1px solid rgba(139,37,0,0.2);
+  flex-wrap: wrap;
+}
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem; color: var(--brick); line-height: 1;
+}
+.stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Floating brick pattern - hero right */
+.hero-visual {
+  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+  width: 340px; height: 400px;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 4px; opacity: 0.18;
+  animation: heroVisualFloat 6s ease-in-out infinite;
+}
+[data-theme="dark"] .hero-visual { opacity: 0.10; }
+@keyframes heroVisualFloat {
+  0%,100% { transform: translateY(-50%) rotate(0deg); }
+  50% { transform: translateY(calc(-50% - 12px)) rotate(1deg); }
+}
+.hv-brick {
+  background: var(--brick); border-radius: 2px;
+  animation: brickPulse var(--d,3s) ease-in-out infinite;
+  animation-delay: var(--delay,0s);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-muted); font-size: 0.7rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 2px; text-transform: uppercase;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ── Section Common ── */
+section { position: relative; z-index: 1; }
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--brick);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 32px; height: 2px; background: var(--brick);
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1; letter-spacing: 1px;
+  color: var(--text); margin-bottom: 20px;
+}
+.section-title span { color: var(--brick); }
+
+/* ── Why Choose Us ── */
+.why {
+  padding: 100px 8%;
+  background: var(--white);
+}
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 2px; margin-top: 56px;
+  border: 2px solid var(--brick);
+}
+.why-card {
+  background: var(--card-bg);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.why-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--brick);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.why-card:hover::before { transform: scaleX(1); }
+.why-card:hover { background: rgba(139,37,0,0.04); }
+.why-icon {
+  width: 52px; height: 52px;
+  background: rgba(139,37,0,0.1);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: var(--brick);
+  margin-bottom: 20px;
+  transition: background .3s, color .3s;
+}
+.why-card:hover .why-icon { background: var(--brick); color: #fff; }
+.why-card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.15rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text);
+  margin-bottom: 12px;
+}
+.why-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); }
+
+/* ── Services ── */
+.services {
+  padding: 100px 8%;
+  background: var(--off-white);
+}
+.services-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 24px; margin-top: 56px;
+}
+.service-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(139,37,0,0.15);
+  border-radius: 2px; padding: 36px 28px;
+  position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px var(--shadow);
+  border-color: var(--brick);
+}
+.service-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; line-height: 1;
+  color: rgba(139,37,0,0.1);
+  position: absolute; top: 16px; right: 24px;
+  transition: color .3s;
+}
+.service-card:hover .service-num { color: rgba(139,37,0,0.2); }
+.service-icon {
+  font-size: 1.6rem; color: var(--brick);
+  margin-bottom: 16px; display: block;
+}
+.service-card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text);
+  margin-bottom: 10px;
+}
+.service-card p { font-size: 0.93rem; line-height: 1.65; color: var(--text-muted); }
+.service-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 18px; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--brick);
+  text-decoration: none; transition: gap .2s;
+}
+.service-link:hover { gap: 10px; }
+
+/* ── About ── */
+.about {
+  padding: 100px 8%;
+  background: var(--brick);
+  color: #fff;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.about .section-label { color: rgba(255,255,255,0.6); }
+.about .section-label::before { background: rgba(255,255,255,0.4); }
+.about .section-title { color: #fff; }
+.about .section-title span { color: var(--mortar); }
+.about p { color: rgba(255,255,255,0.8); line-height: 1.75; margin-bottom: 16px; font-size: 1.01rem; }
+.about-facts {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.about-fact {
+  background: rgba(255,255,255,0.06);
+  padding: 28px;
+  text-align: center;
+  transition: background .3s;
+}
+.about-fact:hover { background: rgba(255,255,255,0.12); }
+.about-fact-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem; color: var(--mortar); line-height: 1;
+}
+.about-fact-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+}
+
+/* ── FAQ ── */
+.faq {
+  padding: 100px 8%;
+  background: var(--white);
+}
+.faq-list { margin-top: 56px; max-width: 780px; }
+.faq-item {
+  border-bottom: 1px solid rgba(139,37,0,0.2);
+}
+.faq-q {
+  width: 100%; background: none; border: none;
+  padding: 24px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 600; letter-spacing: 0.5px;
+  color: var(--text); text-align: left;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--brick); }
+.faq-icon { color: var(--brick); font-size: 1rem; flex-shrink: 0; transition: transform .3s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s ease, padding .3s;
+  font-size: 0.97rem; line-height: 1.7; color: var(--text-muted);
+}
+.faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+/* ── Contact ── */
+.contact {
+  padding: 100px 8%;
+  background: var(--off-white);
+  display: grid; grid-template-columns: 1fr 1.2fr;
+  gap: 80px; align-items: start;
+}
+.contact-info { }
+.contact-detail {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 28px; padding: 20px;
+  background: var(--card-bg);
+  border: 1px solid rgba(139,37,0,0.12);
+  border-radius: 2px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.contact-detail:hover { border-color: var(--brick); box-shadow: 0 4px 16px var(--shadow); }
+.contact-icon {
+  width: 42px; height: 42px; flex-shrink: 0;
+  background: rgba(139,37,0,0.1);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--brick);
+}
+.contact-detail-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.contact-detail-val {
+  font-size: 1rem; font-weight: 600; color: var(--text);
+}
+.contact-detail-val a { color: var(--brick); text-decoration: none; }
+
+.contact-form { }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; margin-bottom: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; padding: 12px 16px;
+  background: var(--card-bg);
+  border: 1.5px solid rgba(139,37,0,0.2);
+  border-radius: 2px; font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem; color: var(--text);
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--brick);
+  box-shadow: 0 0 0 3px rgba(139,37,0,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 120px; }
+
+/* ── Footer ── */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.6);
+  padding: 60px 8% 30px;
+}
+[data-theme="dark"] footer { background: #050200; }
+.footer-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 60px; margin-bottom: 50px;
+}
+.footer-brand { }
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 3px;
+  color: #fff; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.footer-logo-icon {
+  width: 34px; height: 34px; background: var(--brick);
+  border-radius: 2px; display: flex; align-items: center;
+  justify-content: center; color: #fff; font-size: 1rem;
+}
+.footer-brand p { font-size: 0.9rem; line-height: 1.7; max-width: 280px; }
+.footer-col h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: #fff;
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a {
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  font-size: 0.92rem; transition: color .2s;
+}
+.footer-col ul li a:hover { color: var(--mortar); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+  font-size: 0.82rem;
+}
+.footer-bottom a { color: var(--mortar); text-decoration: none; }
+
+/* Entrance animations */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: block; margin-left: auto; }
+  .theme-toggle { margin-left: 12px; }
+  .hero-visual { display: none; }
+  .about { grid-template-columns: 1fr; gap: 48px; }
+  .contact { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 100px 6% 60px; }
+  .why, .services, .faq { padding: 70px 6%; }
+  .about { padding: 70px 6%; }
+  .contact { padding: 70px 6%; }
+  footer { padding: 50px 6% 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .about-facts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- Animated brick background -->
+<div class="brick-bg">
+  <div class="brick-canvas" id="brickCanvas"></div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+    JR Brickwork
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <div class="theme-toggle-knob" id="themeKnob">
+      <i class="fa-solid fa-sun" id="themeIcon"></i>
+    </div>
+  </button>
+  <button class="hamburger" id="menuToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#why" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contact" onclick="closeMobile()">Get a Quote</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <!-- floating brick grid -->
+  <div class="hero-visual" id="heroVisual"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge reveal">
+      <i class="fa-solid fa-shield-halved"></i>
+      Trusted UK Specialists
+    </div>
+    <h1 class="reveal">JR<br><span>Brickwork</span></h1>
+    <p class="hero-sub reveal">& Pointing Specialists</p>
+    <p class="reveal">Expert bricklaying, repointing, and general masonry services for residential and commercial properties across the UK. Built to last — every single time.</p>
+    <div class="hero-actions reveal">
+      <a href="tel:07463169893" class="btn-primary">
+        <i class="fa-solid fa-phone"></i> Call 07463 169893
+      </a>
+      <a href="#services" class="btn-outline">
+        <i class="fa-solid fa-trowel-bricks"></i> Our Services
+      </a>
+    </div>
+    <div class="hero-stats reveal">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Projects Complete</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Fully Insured</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <i class="fa-solid fa-chevron-down"></i>
+    Scroll
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why" id="why">
+  <div class="section-label reveal"><span>Why Choose Us</span></div>
+  <h2 class="section-title reveal">Built On <span>Trust</span><br>& Quality</h2>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon"><i class="fa-solid fa-user-tie"></i></div>
+      <h3>Professional Bricklaying & Pointing</h3>
+      <p>Our experienced specialists deliver top-quality brickwork, repointing, and general masonry services with precision on every project — from foundations to finishing.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"><i class="fa-solid fa-medal"></i></div>
+      <h3>Commitment to Quality</h3>
+      <p>We provide reliable, cost-effective solutions using the latest techniques and materials — guaranteeing durable, high-quality results for residential and commercial properties.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon"><i class="fa-solid fa-handshake"></i></div>
+      <h3>Exceptional Customer Service</h3>
+      <p>Your satisfaction drives everything we do. We offer personalized attention and reliable communication throughout every project, ensuring a stress-free experience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="section-label reveal"><span>What We Do</span></div>
+  <h2 class="section-title reveal">Our <span>Services</span></h2>
+  <div class="services-grid">
+
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <i class="fa-solid fa-trowel-bricks service-icon"></i>
+      <h3>Bricklaying & Brick Repairs</h3>
+      <p>From new constructions to restoration and repairs, we prioritize structural integrity and aesthetic appeal in every layer of brickwork we lay.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <i class="fa-solid fa-wrench service-icon"></i>
+      <h3>Repointing & Tuckpointing</h3>
+      <p>Traditional and modern repointing methods that ensure structural stability and visual enhancement of your masonry — a professional, long-lasting finish.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <i class="fa-solid fa-building service-icon"></i>
+      <h3>Wall Construction & Maintenance</h3>
+      <p>New wall construction or ongoing maintenance — we focus on durability, functionality, and visual appeal with high-quality workmanship throughout.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <i class="fa-solid fa-fire service-icon"></i>
+      <h3>Chimney Repairs</h3>
+      <p>Professional chimney repair services ensuring the safety, functionality, and structural longevity of your chimney — handled with expert care.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-num">05</span>
+      <i class="fa-solid fa-seedling service-icon"></i>
+      <h3>Garden Walls & Boundaries</h3>
+      <p>Enhance your outdoor space with precision-built garden walls and boundary structures — aesthetically pleasing and designed to last for years.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-num">06</span>
+      <i class="fa-solid fa-hammer service-icon"></i>
+      <h3>General Masonry Work</h3>
+      <p>Stone, brick, concrete, and stonemasonry — we deliver high-quality solutions tailored precisely to your project's specific requirements.</p>
+      <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div>
+    <div class="section-label reveal"><span>About Us</span></div>
+    <h2 class="section-title reveal">Your Trusted<br><span>Masonry</span><br>Partner</h2>
+    <p class="reveal">JR Brickwork & Pointing is a trusted, experienced building service based in the UK, specializing in high-quality brickwork, repointing, and general masonry.</p>
+    <p class="reveal">We pride ourselves on delivering reliable, cost-effective, and long-lasting solutions for residential and commercial properties — with peace of mind on every project.</p>
+    <div style="margin-top:32px;" class="reveal">
+      <a href="tel:07463169893" class="btn-primary" style="background:#fff;color:var(--brick);">
+        <i class="fa-solid fa-phone"></i> Call Us Free
+      </a>
+    </div>
+  </div>
+  <div class="about-facts reveal">
+    <div class="about-fact">
+      <div class="about-fact-num">100%</div>
+      <div class="about-fact-label">Fully Insured</div>
+    </div>
+    <div class="about-fact">
+      <div class="about-fact-num">Free</div>
+      <div class="about-fact-label">Quotes Offered</div>
+    </div>
+    <div class="about-fact">
+      <div class="about-fact-num">All</div>
+      <div class="about-fact-label">Sizes Welcome</div>
+    </div>
+    <div class="about-fact">
+      <div class="about-fact-num">UK</div>
+      <div class="about-fact-label">Qualified Team</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-label reveal"><span>FAQ</span></div>
+  <h2 class="section-title reveal">Common <span>Questions</span></h2>
+  <div class="faq-list">
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        What services do you offer?
+        <i class="fa-solid fa-plus faq-icon"></i>
+      </button>
+      <div class="faq-a">We offer a comprehensive range of brickwork, repointing, and general masonry services — including new constructions, repairs, chimney work, garden walls, and specialized masonry. Our experienced specialists deliver reliable, cost-effective solutions tailored to your requirements.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        Are your specialists qualified and insured?
+        <i class="fa-solid fa-plus faq-icon"></i>
+      </button>
+      <div class="faq-a">Yes. All our specialists at JR Brickwork & Pointing are fully qualified and insured professionals. They undergo rigorous training and have the expertise to handle various masonry tasks with precision and skill.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        Do you provide free quotes?
+        <i class="fa-solid fa-plus faq-icon"></i>
+      </button>
+      <div class="faq-a">Absolutely. JR Brickwork & Pointing offers free, no-obligation quotes for all our services. Whether you need brickwork, repointing, or general masonry work, we'll provide a detailed quote tailored to your specific project.</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        Do you work on residential and commercial properties?
+        <i class="fa-solid fa-plus faq-icon"></i>
+      </button>
+      <div class="faq-a">Yes, we work on both residential and commercial properties across the UK. Whether it's a garden wall for your home or a full commercial masonry project, our team has the experience and capacity to deliver.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <div class="section-label reveal"><span>Get In Touch</span></div>
+    <h2 class="section-title reveal">Request a<br><span>Free Quote</span></h2>
+    <p style="color:var(--text-muted);margin-bottom:32px;line-height:1.7;" class="reveal">Ready to start your project? Reach out for a free, no-obligation quote. We'll get back to you promptly.</p>
+
+    <div class="contact-detail reveal">
+      <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+      <div>
+        <div class="contact-detail-label">Phone</div>
+        <div class="contact-detail-val"><a href="tel:07463169893">07463 169893</a></div>
+      </div>
+    </div>
+
+    <div class="contact-detail reveal">
+      <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
+      <div>
+        <div class="contact-detail-label">Website</div>
+        <div class="contact-detail-val"><a href="http://jrbrickworkandpointing.co.uk" target="_blank">jrbrickworkandpointing.co.uk</a></div>
+      </div>
+    </div>
+
+    <div class="contact-detail reveal">
+      <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <div>
+        <div class="contact-detail-label">Location</div>
+        <div class="contact-detail-val">United Kingdom</div>
+      </div>
+    </div>
+
+    <div class="contact-detail reveal">
+      <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+      <div>
+        <div class="contact-detail-label">Availability</div>
+        <div class="contact-detail-val">Mon – Sat, 7am – 6pm</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form reveal">
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Service Required</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Bricklaying & Brick Repairs</option>
+          <option>Repointing & Tuckpointing</option>
+          <option>Wall Construction & Maintenance</option>
+          <option>Chimney Repairs</option>
+          <option>Garden Walls & Boundaries</option>
+          <option>General Masonry Work</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your project..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;justify-content:center;font-size:1rem;">
+        <i class="fa-solid fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+    <div id="formMsg" style="display:none;margin-top:16px;padding:14px 20px;background:rgba(139,37,0,0.08);border:1px solid var(--brick);border-radius:2px;color:var(--brick);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:1px;">
+      <i class="fa-solid fa-circle-check"></i> Thank you! We'll be in touch soon.
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+        JR Brickwork & Pointing
+      </div>
+      <p>Trusted brickwork and pointing specialists delivering high-quality masonry services across the UK. Built on precision, lasting in quality.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Bricklaying & Repairs</a></li>
+        <li><a href="#services">Repointing & Tuckpointing</a></li>
+        <li><a href="#services">Wall Construction</a></li>
+        <li><a href="#services">Chimney Repairs</a></li>
+        <li><a href="#services">Garden Walls</a></li>
+        <li><a href="#services">General Masonry</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:07463169893"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>07463 169893</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-envelope" style="margin-right:8px;"></i>Send a Message</a></li>
+        <li><a href="#faq"><i class="fa-solid fa-circle-question" style="margin-right:8px;"></i>FAQ</a></li>
+        <li><a href="http://jrbrickworkandpointing.co.uk" target="_blank"><i class="fa-solid fa-globe" style="margin-right:8px;"></i>Website</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 JR Brickwork & Pointing. All rights reserved.</span>
+    <span>Built with precision — <a href="tel:07463169893">07463 169893</a></span>
+  </div>
+</footer>
+
+<script>
+/* ── Brick Background Generator ── */
+const canvas = document.getElementById('brickCanvas');
+const rows = 20;
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < 12; c++) {
+    const el = document.createElement('div');
+    el.className = 'brick-cell';
+    const d = (2.5 + Math.random() * 3).toFixed(1) + 's';
+    const delay = (Math.random() * 4).toFixed(2) + 's';
+    el.style.cssText = `--d:${d};--delay:${delay};height:${30 + Math.floor(Math.random()*14)}px;opacity:${0.3+Math.random()*0.7}`;
+    canvas.appendChild(el);
+  }
+}
+
+/* ── Hero Visual Bricks ── */
+const hv = document.getElementById('heroVisual');
+for (let i = 0; i < 40; i++) {
+  const b = document.createElement('div');
+  b.className = 'hv-brick';
+  b.style.cssText = `--d:${(2+Math.random()*4).toFixed(1)}s;--delay:${(Math.random()*3).toFixed(2)}s`;
+  hv.appendChild(b);
+}
+
+/* ── Cursor ── */
+const cursor = document.getElementById('cursor');
+const dot = document.getElementById('cursor-dot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animateCursor() {
+  cx += (mx - cx) * 0.15;
+  cy += (my - cy) * 0.15;
+  cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .why-card, .service-card, .faq-q, .contact-detail').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+});
+
+/* ── Dark Mode ── */
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+function setTheme(dark) {
+  html.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeIcon.className = dark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+themeToggle.addEventListener('click', () => {
+  setTheme(html.getAttribute('data-theme') !== 'dark');
+});
+if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  setTheme(true);
+}
+
+/* ── Mobile Nav ── */
+const mobileNav = document.getElementById('mobileNav');
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+function closeMobile() { mobileNav.classList.remove('open'); }
+
+/* ── FAQ Accordion ── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+/* ── Scroll Reveal ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.08 + 's';
+  observer.observe(el);
+});
+
+/* ── Form ── */
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formMsg').style.display = 'block';
+  e.target.reset();
+  setTimeout(() => { document.getElementById('formMsg').style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>
