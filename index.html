@@ -43,10 +43,10 @@
 /* Custom Cursor - Only Desktop */
 @media (pointer: fine) {
   * { cursor: none !important; }
-  #cursor, #cursor-dot { display: block; }
+  #cursor, #cursor-trail { display: block; }
 }
 @media (pointer: coarse), (max-width: 900px) {
-  #cursor, #cursor-dot { display: none !important; }
+  #cursor, #cursor-trail { display: none !important; }
   * { cursor: auto !important; }
 }
 #cursor {
@@ -64,10 +64,16 @@
   height: 16px;
   box-shadow: 0 0 16px rgba(204,34,0,0.6), inset 0 0 0 2px rgba(255,255,255,0.5);
 }
-#cursor-dot {
-  position: fixed; z-index: 9999; pointer-events: none;
-  width: 0; height: 0;
-  display: none;
+#cursor-trail {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9998;
+}
+.cursor-tail {
+  position: fixed; pointer-events: none;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(204, 34, 0, 0.44);
+  transform: translate(-50%, -50%);
+  filter: blur(0.5px);
 }
 
 html { scroll-behavior: smooth; }
@@ -109,7 +115,7 @@ nav {
   background: var(--nav-bg);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(204,0,0,0.2);
-  display: flex; align-items: center;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 0 5%;
   height: 90px;
   transition: all .3s ease;
@@ -161,10 +167,12 @@ nav::before {
   box-shadow: 0 6px 20px rgba(204,0,0,0.4);
 }
 .nav-links {
-  display: flex; gap: 40px;
-  margin-left: auto;
+  display: flex; gap: 32px;
+  margin: 0 auto;
+  justify-content: center;
   list-style: none;
   position: relative; z-index: 2;
+  flex: 1 1 auto;
 }
 .nav-links a {
   font-family: 'Barlow Condensed', sans-serif;
@@ -793,9 +801,19 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
-  .hamburger { display: block; margin-left: auto; }
-  .theme-toggle { margin-left: 12px; }
-  .hero-visual { display: none; }
+  .theme-toggle { margin-left: auto; }
+  .hamburger { display: block; margin-left: 12px; }
+  .hero-visual,
+  .hero-visual-left { display: none !important; }
+  .brick-bg {
+    opacity: 1;
+  }
+  .brick-canvas {
+    opacity: 0.3;
+  }
+  .brick-cell {
+    margin: 2px;
+  }
   .about { grid-template-columns: 1fr; gap: 48px; }
   .contact { grid-template-columns: 1fr; gap: 48px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -820,7 +838,7 @@ footer {
 
 <!-- Custom cursor -->
 <div id="cursor"></div>
-<div id="cursor-dot"></div>
+<div id="cursor-trail"></div>
 
 <!-- Animated brick background -->
 <div class="brick-bg">
@@ -1336,21 +1354,42 @@ for (let i = 0; i < 45; i++) {
 
 /* ── Cursor ── */
 const cursor = document.getElementById('cursor');
-const dot = document.getElementById('cursor-dot');
+const trailContainer = document.getElementById('cursor-trail');
+const tailCount = 6;
+const tailEls = [];
 let mx = 0, my = 0, cx = 0, cy = 0;
+const tailPos = Array.from({ length: tailCount }, () => ({ x: 0, y: 0 }));
 
-document.addEventListener('mousemove', e => { 
-  mx = e.clientX; 
+for (let i = 0; i < tailCount; i++) {
+  const tail = document.createElement('div');
+  tail.className = 'cursor-tail';
+  const size = 10 - i;
+  tail.style.opacity = String(0.6 - i * 0.08);
+  tail.style.width = `${size}px`;
+  tail.style.height = `${size}px`;
+  trailContainer.appendChild(tail);
+  tailEls.push(tail);
+}
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
   my = e.clientY;
 });
 
 function animateCursor() {
-  cx += (mx - cx) * 0.2;
-  cy += (my - cy) * 0.2;
-  cursor.style.left = cx + 'px'; 
+  cx += (mx - cx) * 0.22;
+  cy += (my - cy) * 0.22;
+  cursor.style.left = cx + 'px';
   cursor.style.top = cy + 'px';
-  dot.style.left = mx + 'px'; 
-  dot.style.top = my + 'px';
+
+  for (let i = 0; i < tailCount; i++) {
+    const target = i === 0 ? { x: mx, y: my } : tailPos[i - 1];
+    tailPos[i].x += (target.x - tailPos[i].x) * (0.16 + i * 0.04);
+    tailPos[i].y += (target.y - tailPos[i].y) * (0.16 + i * 0.04);
+    tailEls[i].style.left = tailPos[i].x + 'px';
+    tailEls[i].style.top = tailPos[i].y + 'px';
+  }
+
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
