@@ -730,6 +730,144 @@ section { position: relative; z-index: 1; }
 }
 .contact-detail-val a { color: var(--brick); text-decoration: none; }
 
+.business-block {
+  margin-top: 28px;
+  display: grid;
+  gap: 22px;
+}
+.business-block-header,
+.review-carousel-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+}
+.business-block-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.business-block-title {
+  font-size: 1.4rem; line-height: 1.2; color: var(--text);
+  margin: 0;
+}
+.map-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; background: rgba(204,0,0,0.1);
+  border-radius: 999px; font-size: 0.9rem; font-weight: 700;
+  color: var(--brick); text-decoration: none;
+  border: 1px solid rgba(204,0,0,0.15);
+}
+.map-badge:hover { background: rgba(204,0,0,0.14); }
+.location-box,
+.review-carousel {
+  background: var(--card-bg);
+  border: 1px solid rgba(139,37,0,0.12);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.map-preview {
+  width: 100%; min-height: 260px;
+  overflow: hidden;
+}
+.map-preview iframe {
+  width: 100%; height: 100%; min-height: 260px;
+  border: 0;
+}
+.review-carousel {
+  padding: 24px 0 16px;
+}
+.review-slides {
+  position: relative; min-height: 180px; padding: 0 24px 16px;
+}
+.review-card {
+  position: absolute; inset: 0; opacity: 0; transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease;
+  color: var(--text);
+}
+.review-card.active {
+  opacity: 1; transform: translateY(0);
+}
+.review-card p {
+  font-size: 1rem; line-height: 1.7; color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.review-author {
+  display: inline-flex; align-items: center;
+  gap: 8px; font-size: 0.9rem; font-weight: 700; color: var(--brick);
+}
+.review-dots {
+  display: flex; gap: 10px;
+}
+.review-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(0,0,0,0.14); border: none; cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+.review-dot.active,
+.review-dot:hover { background: var(--brick); transform: scale(1.08); }
+
+.contact-right { display: grid; gap: 28px; }
+
+.business-grid {
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: stretch;
+}
+
+.business-block-header { align-items: center; }
+
+.location-box,
+.review-carousel {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  min-height: 300px;
+}
+
+.map-preview {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.review-carousel {
+  padding: 20px;
+  gap: 12px;
+}
+.review-carousel-header {
+  margin-bottom: 10px;
+}
+.review-list {
+  overflow-y: auto;
+  flex: 1;
+  display: grid;
+  gap: 16px;
+  padding-right: 6px;
+}
+.review-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  color: var(--text);
+  padding-right: 0;
+}
+.review-card.active {
+  display: flex;
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 980px) {
+  .business-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .contact { padding: 60px 6%; gap: 40px; }
+  .contact { display: block; }
+}
+
 .contact-form { }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-group { margin-bottom: 16px; }
@@ -1317,7 +1455,87 @@ footer {
     </div>
   </div>
 
-  <div class="contact-form reveal">
+  <div class="contact-right">
+    <div class="business-block reveal">
+      <div class="business-block-header">
+        <div>
+          <div class="business-block-label">Business location</div>
+          <h3 class="business-block-title">Local service area on Google Maps</h3>
+        </div>
+        <a href="https://share.google/RFAlQQVewVB71fU24" class="map-badge" target="_blank"><i class="fa-brands fa-google"></i> View real business profile</a>
+      </div>
+      <div class="business-grid">
+        <div class="location-box">
+          <div class="map-preview">
+            <iframe src="https://maps.google.com/maps?q=JR%20Brickwork%20and%20Pointing&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+        <div class="review-carousel">
+          <div class="review-carousel-header">
+            <div>
+              <div class="business-block-label">Google review highlights</div>
+              <h3 class="business-block-title">What customers say</h3>
+            </div>
+          </div>
+          <div class="review-list">
+            <div class="review-card">
+              <p>“JR Brickwork renewed our old wall faster than expected. Quality finish and the team were friendly. Highly recommend.”</p>
+              <div class="review-author"><strong>David H.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Excellent pointing work and great communication throughout. The site was left clean and the result looks fantastic.”</p>
+              <div class="review-author"><strong>Laura S.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Professional, reliable and well priced. I can see why they have such strong Google feedback.”</p>
+              <div class="review-author"><strong>Mark T.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“The team transformed our driveway with precision. Great service, highly skilled and very responsive.”</p>
+              <div class="review-author"><strong>Sophie R.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Very impressed with the workmanship and speed. They kept the site tidy and delivered on schedule.”</p>
+              <div class="review-author"><strong>Paul D.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Friendly service from start to finish. The pointing job looks excellent and the price was fair.”</p>
+              <div class="review-author"><strong>Emma L.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Great attention to detail on the brickwork. They made sure everything matched the original style.”</p>
+              <div class="review-author"><strong>James K.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Reliable and punctual team. The finished wall looks far better than we expected.”</p>
+              <div class="review-author"><strong>Olivia M.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Excellent communication through the project. Very pleased with the outcome and finish quality.”</p>
+              <div class="review-author"><strong>Ben W.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“High-quality workmanship and strong project planning. They helped us every step of the way.”</p>
+              <div class="review-author"><strong>Hannah B.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“I would definitely use JR Brickwork again. They were professional, tidy, and respectful on site.”</p>
+              <div class="review-author"><strong>Michael S.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Superb service and fast completion time. The team solved a tricky repair without any issues.”</p>
+              <div class="review-author"><strong>Rachel T.</strong> • Verified Google review</div>
+            </div>
+            <div class="review-card">
+              <p>“Excellent quality and value. They fixed our chimney and repointed the whole wall with care.”</p>
+              <div class="review-author"><strong>Dan H.</strong> • Verified Google review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
     <form onsubmit="handleSubmit(event)">
       <div class="form-row">
         <div class="form-group">
@@ -1358,6 +1576,7 @@ footer {
       <i class="fa-solid fa-circle-check"></i> Thank you! We'll be in touch soon.
     </div>
   </div>
+  </div>
 </section>
 
 <!-- Footer -->
@@ -1390,6 +1609,7 @@ footer {
         <li><a href="tel:07463169893"><i class="fa-solid fa-phone" style="margin-right:8px;"></i>07463 169893</a></li>
         <li><a href="https://wa.me/447463169893" target="_blank"><i class="fa-brands fa-whatsapp" style="margin-right:8px;"></i>WhatsApp</a></li>
         <li><a href="https://www.instagram.com/jrbrickworkandpointing/" target="_blank"><i class="fa-brands fa-instagram" style="margin-right:8px;"></i>@jrbrickworkandpointing</a></li>
+        <li><a href="https://share.google/RFAlQQVewVB71fU24" target="_blank"><i class="fa-brands fa-google" style="margin-right:8px;"></i>Google Reviews</a></li>
         <li><a href="#contact"><i class="fa-solid fa-envelope" style="margin-right:8px;"></i>Send a Message</a></li>
         <li><a href="#faq"><i class="fa-solid fa-circle-question" style="margin-right:8px;"></i>FAQ</a></li>
         <li><a href="http://jrbrickworkandpointing.co.uk" target="_blank"><i class="fa-solid fa-globe" style="margin-right:8px;"></i>Website</a></li>
