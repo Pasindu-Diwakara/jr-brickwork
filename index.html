@@ -112,21 +112,25 @@ body {
 /* ── Navigation ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(204,0,0,0.2);
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 5%;
   height: 90px;
   transition: all .3s ease;
-  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
   overflow: hidden;
-  position: relative;
 }
 nav::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(180deg, rgba(204,0,0,0.03) 0%, transparent 100%);
   pointer-events: none;
+}
+[data-theme="dark"] nav {
+  background: rgba(10,10,10,0.26);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 .nav-logo {
   display: flex; align-items: center; gap: 12px;
@@ -279,7 +283,7 @@ nav::before {
   position: relative; z-index: 1;
   min-height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  padding: 80px 5% 80px;
+  padding: 130px 5% 80px;
   overflow: hidden;
 }
 .hero-content { max-width: 800px; margin: 0 auto; text-align: center; }
@@ -755,11 +759,22 @@ section { position: relative; z-index: 1; }
 
 /* ── Footer ── */
 footer {
-  background: var(--dark);
-  color: rgba(255,255,255,0.6);
+  background: #050200;
+  color: rgba(255,255,255,0.9);
   padding: 60px 8% 30px;
 }
-[data-theme="dark"] footer { background: #050200; }
+[data-theme="light"] footer {
+  background: rgba(255,255,255,0.96);
+  color: rgba(0,0,0,0.85);
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+[data-theme="light"] .footer-col ul li a,
+[data-theme="light"] .footer-bottom a {
+  color: rgba(0,0,0,0.75);
+}
+[data-theme="light"] .footer-col ul li a:hover {
+  color: rgba(0,0,0,0.95);
+}
 .footer-grid {
   display: grid; grid-template-columns: 1.5fr 1fr 1fr;
   gap: 60px; margin-bottom: 50px;
@@ -793,7 +808,7 @@ footer {
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 24px;
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; justify-content: center; align-items: center;
   flex-wrap: wrap; gap: 12px;
   font-size: 0.82rem;
 }
@@ -1331,11 +1346,13 @@ footer {
 <!-- Footer -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="footer-logo" style="gap:12px;">
-        <img id="footerLogo" src="image/logo.png" alt="JR Brickwork Logo" style="width:44px;height:44px;object-fit:contain;display:block;" />
+    <div class="footer-brand" style="display:flex; align-items:flex-start; gap:20px;">
+      <div class="footer-logo" style="width:110px; height:110px; min-width:110px;">
+        <img id="footerLogo" src="image/logo.png" alt="JR Brickwork Logo" style="width:100%; height:100%; object-fit:contain; display:block;" />
       </div>
-      <p>Trusted brickwork and pointing specialists delivering high-quality masonry services across the UK. Built on precision, lasting in quality.</p>
+      <div>
+        <p>Trusted brickwork and pointing specialists delivering high-quality masonry services across the UK. Built on precision, lasting in quality.</p>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
@@ -1361,8 +1378,7 @@ footer {
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2025 JR Brickwork & Pointing. All rights reserved.</span>
-    <span>Built with precision — <a href="tel:07463169893">07463 169893</a></span>
+    <span>&copy; 2026 JR Brickwork & Pointing. All rights reserved.</span>
   </div>
 </footer>
 
