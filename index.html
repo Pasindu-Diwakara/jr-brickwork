@@ -43,41 +43,23 @@
 * { cursor: none !important; }
 #cursor {
   position: fixed; z-index: 9999; pointer-events: none;
-  width: 20px; height: 20px;
-  border: 2px dotted var(--cursor-color);
-  border-radius: 50%;
-  transform: translate(-50%,-50%);
-  transition: opacity .2s;
-  opacity: 0.7;
-  box-shadow: inset 0 0 0 1px rgba(204,34,0,0.2);
-}
-#cursor.active {
-  opacity: 1;
-  border-width: 2.5px;
-  box-shadow: inset 0 0 0 1px rgba(204,34,0,0.3), 0 0 12px rgba(204,34,0,0.3);
-  width: 24px;
-  height: 24px;
-}
-#cursor-dot {
-  position: fixed; z-index: 9999; pointer-events: none;
-  width: 4px; height: 4px;
+  width: 12px; height: 12px;
   background: var(--cursor-color);
   border-radius: 50%;
   transform: translate(-50%,-50%);
-  opacity: 0.6;
+  transition: width .2s, height .2s, box-shadow .2s;
+  box-shadow: 0 0 8px rgba(204,34,0,0.4), inset 0 0 0 2px rgba(255,255,255,0.3);
+  opacity: 0.9;
 }
-/* Cursor trail */
-.cursor-trail {
-  position: fixed; z-index: 9998; pointer-events: none;
-  width: 6px; height: 6px;
-  border: 1px dotted var(--cursor-color);
-  border-radius: 50%;
-  opacity: 0;
-  animation: trailFade 0.6s ease-out forwards;
+#cursor.active {
+  width: 16px;
+  height: 16px;
+  box-shadow: 0 0 16px rgba(204,34,0,0.6), inset 0 0 0 2px rgba(255,255,255,0.5);
 }
-@keyframes trailFade {
-  from { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
-  to { opacity: 0; transform: translate(-50%,-50%) scale(0.3); }
+#cursor-dot {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 0; height: 0;
+  display: none;
 }
 
 html { scroll-behavior: smooth; }
@@ -1224,22 +1206,31 @@ for (let i = 0; i < 45; i++) {
 
 /* ── Cursor ── */
 const cursor = document.getElementById('cursor');
+const dot = document.getElementById('cursor-dot');
 let mx = 0, my = 0, cx = 0, cy = 0;
-cursor.textContent = '�';
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+document.addEventListener('mousemove', e => { 
+  mx = e.clientX; 
+  my = e.clientY;
+});
+
 function animateCursor() {
-  cx += (mx - cx) * 0.15;
-  cy += (my - cy) * 0.15;
-  cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+  cx += (mx - cx) * 0.2;
+  cy += (my - cy) * 0.2;
+  cursor.style.left = cx + 'px'; 
+  cursor.style.top = cy + 'px';
+  dot.style.left = mx + 'px'; 
+  dot.style.top = my + 'px';
   requestAnimationFrame(animateCursor);
 }
 animateCursor();
-// Global hover listener for all interactive elements
+
 document.addEventListener('mouseenter', (e) => {
   if (e.target.matches('a, button, .why-card, .service-card, .faq-q, .contact-detail, .portfolio-item, input, textarea, select')) {
     cursor.classList.add('active');
   }
 }, true);
+
 document.addEventListener('mouseleave', (e) => {
   if (e.target.matches('a, button, .why-card, .service-card, .faq-q, .contact-detail, .portfolio-item, input, textarea, select')) {
     cursor.classList.remove('active');
@@ -1301,3 +1292,4 @@ function handleSubmit(e) {
 </script>
 </body>
 </html>
+
