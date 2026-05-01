@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
@@ -85,7 +85,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Animated Brick Background ── */
+/* â”€â”€ Animated Brick Background â”€â”€ */
 .brick-bg {
   position: fixed; inset: 0; z-index: 0;
   overflow: hidden; pointer-events: none;
@@ -110,7 +110,7 @@ body {
   50% { opacity: 1; transform: scaleY(1.04); }
 }
 
-/* ── Navigation ── */
+/* â”€â”€ Navigation â”€â”€ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: rgba(255,255,255,0.18);
@@ -279,7 +279,7 @@ nav::before {
   border-bottom: 1px solid rgba(139,37,0,0.15);
 }
 
-/* ── Hero ── */
+/* â”€â”€ Hero â”€â”€ */
 .hero {
   position: relative; z-index: 1;
   min-height: 100vh;
@@ -407,7 +407,7 @@ nav::before {
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
-/* ── Section Common ── */
+/* â”€â”€ Section Common â”€â”€ */
 section { position: relative; z-index: 1; }
 .section-label {
   font-family: 'Barlow Condensed', sans-serif;
@@ -428,7 +428,7 @@ section { position: relative; z-index: 1; }
 }
 .section-title span { color: var(--brick); }
 
-/* ── Why Choose Us ── */
+/* â”€â”€ Why Choose Us â”€â”€ */
 .why {
   padding: 100px 8%;
   background: var(--white);
@@ -471,7 +471,7 @@ section { position: relative; z-index: 1; }
 }
 .why-card p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); }
 
-/* ── Services ── */
+/* â”€â”€ Services â”€â”€ */
 .services {
   padding: 100px 8%;
   background: var(--off-white);
@@ -529,7 +529,7 @@ section { position: relative; z-index: 1; }
 }
 .service-link:hover { gap: 10px; }
 
-/* ── Portfolio ── */
+/* â”€â”€ Portfolio â”€â”€ */
 .portfolio {
   padding: 100px 8%;
   background: var(--white);
@@ -630,7 +630,7 @@ section { position: relative; z-index: 1; }
   text-align: center;
 }
 
-/* ── About ── */
+/* â”€â”€ About â”€â”€ */
 .about {
   padding: 100px 8%;
   background: var(--brick);
@@ -666,7 +666,7 @@ section { position: relative; z-index: 1; }
   margin-top: 6px;
 }
 
-/* ── FAQ ── */
+/* â”€â”€ FAQ â”€â”€ */
 .faq {
   padding: 100px 8%;
   background: var(--white);
@@ -695,7 +695,7 @@ section { position: relative; z-index: 1; }
 }
 .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
 
-/* ── Contact ── */
+/* â”€â”€ Contact â”€â”€ */
 .contact {
   padding: 100px 8%;
   background: var(--off-white);
@@ -749,6 +749,13 @@ section { position: relative; z-index: 1; }
   font-size: 1.4rem; line-height: 1.2; color: var(--text);
   margin: 0;
 }
+.review-disclaimer {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 420px;
+  line-height: 1.6;
+}
 .map-badge {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 16px; background: rgba(204,0,0,0.1);
@@ -762,6 +769,8 @@ section { position: relative; z-index: 1; }
   background: var(--card-bg);
   border: 1px solid rgba(139,37,0,0.12);
   border-radius: 16px;
+}
+.location-box {
   overflow: hidden;
 }
 .map-preview {
@@ -773,45 +782,77 @@ section { position: relative; z-index: 1; }
   border: 0;
 }
 .review-carousel {
-  padding: 24px 0 16px;
-}
-..review-slides {
-  position: relative; min-height: 180px; padding: 0 24px 16px;
-}
-.review-card {
-  min-width: 100%;
-  max-width: 100%;
-  flex: 0 0 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 12px;
-  color: var(--text);
-  padding-right: 0;
-  position: static;
-  opacity: 1;
-  transform: none;
-}
-.review-card p {
-  font-size: 1rem; line-height: 1.7; color: var(--text-muted);
-  margin-bottom: 16px;
-}
-.review-author {
-  display: inline-flex; align-items: center;
-  gap: 8px; font-size: 0.9rem; font-weight: 700; color: var(--brick);
-}
-.review-dots {
-  display: flex; gap: 10px;
-}
-.review-dot {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: rgba(0,0,0,0.14); border: none; cursor: pointer;
-  transition: transform .2s, background .2s;
-}
-.review-dot.active,
-.review-dot:hover { background: var(--brick); transform: scale(1.08); }
-
+    padding: 24px;
+  }
+  .review-list {
+    position: relative;
+    overflow: visible;
+    min-height: 190px;
+  }
+  .review-list .review-card {
+    display: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .review-list .review-card.active {
+    display: flex;
+  }
+  .review-card p {
+    font-size: 1rem; line-height: 1.7; color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .review-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .review-stars i {
+    color: #F5C518;
+    font-size: 0.96rem;
+  }
+  .review-author {
+    display: inline-flex; align-items: center;
+    gap: 8px; font-size: 0.9rem; font-weight: 700; color: var(--brick);
+  }
+  .review-nav {
+    display: none;
+  }
+  .review-btn {
+    min-width: 40px;
+    min-height: 40px;
+    height: auto;
+    border-radius: 999px;
+    border: 1px solid rgba(139,37,0,0.2);
+    background: rgba(255,255,255,0.9);
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+    text-decoration: none;
+    padding: 0 16px;
+  }
+  .review-btn:hover {
+    background: var(--brick);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .review-live {
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .review-btn.review-prev,
+  .review-btn.review-next {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
 .contact-right { display: grid; gap: 28px; }
 
 .business-grid {
@@ -824,8 +865,17 @@ section { position: relative; z-index: 1; }
 .review-carousel {
   display: flex;
   flex-direction: column;
-  height: 300px;
   min-height: 300px;
+  height: auto;
+}
+
+.location-box {
+  min-height: 300px;
+}
+
+.review-carousel {
+  min-height: 300px;
+  height: auto;
 }
 
 .map-preview {
@@ -939,7 +989,7 @@ section { position: relative; z-index: 1; }
 }
 .form-group textarea { resize: vertical; min-height: 120px; }
 
-/* ── Footer ── */
+/* â”€â”€ Footer â”€â”€ */
 footer {
   background: #050200;
   color: rgba(255,255,255,0.9);
@@ -1003,7 +1053,7 @@ footer {
 }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* ── Responsive ── */
+/* â”€â”€ Responsive â”€â”€ */
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
@@ -1132,7 +1182,7 @@ footer {
       <i class="fa-solid fa-shield-halved"></i>
       Trusted UK Specialists
     </div>
-    <p class="reveal">Expert bricklaying, repointing, and general masonry services for residential and commercial properties across the UK. Built to last — every single time.</p>
+    <p class="reveal">Expert bricklaying, repointing, and general masonry services for residential and commercial properties across the UK. Built to last â€” every single time.</p>
     <div class="hero-actions reveal">
       <a href="tel:07463169893" class="btn-primary">
         <i class="fa-solid fa-phone"></i> Call 07463 169893
@@ -1171,12 +1221,12 @@ footer {
     <div class="why-card reveal">
       <div class="why-icon"><i class="fa-solid fa-user-tie"></i></div>
       <h3>Professional Bricklaying & Pointing</h3>
-      <p>Our experienced specialists deliver top-quality brickwork, repointing, and general masonry services with precision on every project — from foundations to finishing.</p>
+      <p>Our experienced specialists deliver top-quality brickwork, repointing, and general masonry services with precision on every project â€” from foundations to finishing.</p>
     </div>
     <div class="why-card reveal">
       <div class="why-icon"><i class="fa-solid fa-medal"></i></div>
       <h3>Commitment to Quality</h3>
-      <p>We provide reliable, cost-effective solutions using the latest techniques and materials — guaranteeing durable, high-quality results for residential and commercial properties.</p>
+      <p>We provide reliable, cost-effective solutions using the latest techniques and materials â€” guaranteeing durable, high-quality results for residential and commercial properties.</p>
     </div>
     <div class="why-card reveal">
       <div class="why-icon"><i class="fa-solid fa-handshake"></i></div>
@@ -1204,7 +1254,7 @@ footer {
       <span class="service-num">02</span>
       <i class="fa-solid fa-wrench service-icon"></i>
       <h3>Repointing & Tuckpointing</h3>
-      <p>Traditional and modern repointing methods that ensure structural stability and visual enhancement of your masonry — a professional, long-lasting finish.</p>
+      <p>Traditional and modern repointing methods that ensure structural stability and visual enhancement of your masonry â€” a professional, long-lasting finish.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1212,7 +1262,7 @@ footer {
       <span class="service-num">03</span>
       <i class="fa-solid fa-building service-icon"></i>
       <h3>Wall Construction & Maintenance</h3>
-      <p>New wall construction or ongoing maintenance — we focus on durability, functionality, and visual appeal with high-quality workmanship throughout.</p>
+      <p>New wall construction or ongoing maintenance â€” we focus on durability, functionality, and visual appeal with high-quality workmanship throughout.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1220,7 +1270,7 @@ footer {
       <span class="service-num">04</span>
       <i class="fa-solid fa-fire service-icon"></i>
       <h3>Chimney Repairs</h3>
-      <p>Professional chimney repair services ensuring the safety, functionality, and structural longevity of your chimney — handled with expert care.</p>
+      <p>Professional chimney repair services ensuring the safety, functionality, and structural longevity of your chimney â€” handled with expert care.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1228,7 +1278,7 @@ footer {
       <span class="service-num">05</span>
       <i class="fa-solid fa-seedling service-icon"></i>
       <h3>Garden Walls & Boundaries</h3>
-      <p>Enhance your outdoor space with precision-built garden walls and boundary structures — aesthetically pleasing and designed to last for years.</p>
+      <p>Enhance your outdoor space with precision-built garden walls and boundary structures â€” aesthetically pleasing and designed to last for years.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1236,7 +1286,7 @@ footer {
       <span class="service-num">06</span>
       <i class="fa-solid fa-hammer service-icon"></i>
       <h3>General Masonry Work</h3>
-      <p>Stone, brick, concrete, and stonemasonry — we deliver high-quality solutions tailored precisely to your project's specific requirements.</p>
+      <p>Stone, brick, concrete, and stonemasonry â€” we deliver high-quality solutions tailored precisely to your project's specific requirements.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1244,7 +1294,7 @@ footer {
       <span class="service-num">07</span>
       <i class="fa-solid fa-droplet service-icon"></i>
       <h3>DPC Injection</h3>
-      <p>Professional Damp Proof Course injection services to protect your property from rising damp — a proven, long-lasting solution for moisture prevention.</p>
+      <p>Professional Damp Proof Course injection services to protect your property from rising damp â€” a proven, long-lasting solution for moisture prevention.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1252,7 +1302,7 @@ footer {
       <span class="service-num">08</span>
       <i class="fa-solid fa-wind service-icon"></i>
       <h3>Full Cavity Vacuum</h3>
-      <p>Advanced cavity vacuum solutions to eliminate penetrating damp and moisture issues — keeping your walls dry and preventing structural damage.</p>
+      <p>Advanced cavity vacuum solutions to eliminate penetrating damp and moisture issues â€” keeping your walls dry and preventing structural damage.</p>
       <a href="#contact" class="service-link">Request a Quote <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -1524,7 +1574,7 @@ footer {
     <div class="section-label reveal"><span>About Us</span></div>
     <h2 class="section-title reveal">Your Trusted<br><span>Masonry</span><br>Partner</h2>
     <p class="reveal">JR Brickwork & Pointing is a trusted, experienced building service based in the UK, specializing in high-quality brickwork, repointing, and general masonry.</p>
-    <p class="reveal">We pride ourselves on delivering reliable, cost-effective, and long-lasting solutions for residential and commercial properties — with peace of mind on every project.</p>
+    <p class="reveal">We pride ourselves on delivering reliable, cost-effective, and long-lasting solutions for residential and commercial properties â€” with peace of mind on every project.</p>
     <div style="margin-top:32px;" class="reveal">
       <a href="tel:07463169893" class="btn-primary" style="background:#fff;color:var(--brick);">
         <i class="fa-solid fa-phone"></i> Call Us Free
@@ -1562,7 +1612,7 @@ footer {
         What services do you offer?
         <i class="fa-solid fa-plus faq-icon"></i>
       </button>
-      <div class="faq-a">We offer a comprehensive range of brickwork, repointing, and general masonry services — including new constructions, repairs, chimney work, garden walls, and specialized masonry. Our experienced specialists deliver reliable, cost-effective solutions tailored to your requirements.</div>
+      <div class="faq-a">We offer a comprehensive range of brickwork, repointing, and general masonry services â€” including new constructions, repairs, chimney work, garden walls, and specialized masonry. Our experienced specialists deliver reliable, cost-effective solutions tailored to your requirements.</div>
     </div>
 
     <div class="faq-item reveal">
@@ -1659,7 +1709,7 @@ footer {
       <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
       <div>
         <div class="contact-detail-label">Availability</div>
-        <div class="contact-detail-val">Mon – Sat, 7am – 6pm</div>
+        <div class="contact-detail-val">Mon â€“ Sat, 7am â€“ 6pm</div>
       </div>
     </div>
   </div>
@@ -1671,7 +1721,7 @@ footer {
           <div class="business-block-label">Business location</div>
           <h3 class="business-block-title">Local service area on Google Maps</h3>
         </div>
-        <a href="https://share.google/RFAlQQVewVB71fU24" class="map-badge" target="_blank"><i class="fa-brands fa-google"></i> View real business profile</a>
+        <a href="https://share.google/J64pmWEpSqjkTaoAk" class="map-badge" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-google"></i> View real business profile</a>
       </div>
       <div class="business-grid">
         <div class="location-box">
@@ -1685,63 +1735,62 @@ footer {
               <div class="business-block-label">Google review highlights</div>
               <h3 class="business-block-title">What customers say</h3>
             </div>
-            <div class="review-nav">
-              <button class="review-btn review-prev" type="button" aria-label="Previous review"><i class="fa-solid fa-chevron-left"></i></button>
-              <button class="review-btn review-next" type="button" aria-label="Next review"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
           </div>
           <div class="review-list">
-            <div class="review-card">
-              <p>“JR Brickwork renewed our old wall faster than expected. Quality finish and the team were friendly. Highly recommend.”</p>
-              <div class="review-author"><strong>David H.</strong> • Verified Google review</div>
+            <div class="review-card active">
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Brilliant service from start to finish. Communication was clear and reliable throughout, and the pointing work was carried out to a very high standard. The area was kept clean and tidy at all times, which I really appreciated. I would highly recommend"</p>
+              <div class="review-author"><strong>Nathalie Cass</strong></div>
             </div>
             <div class="review-card">
-              <p>“Excellent pointing work and great communication throughout. The site was left clean and the result looks fantastic.”</p>
-              <div class="review-author"><strong>Laura S.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Excellent work, arrived on time did a great job pointing the front and tidied after. Really good job and decent price."</p>
+              <div class="review-author"><strong>Mark Kirkham</strong></div>
             </div>
             <div class="review-card">
-              <p>“Professional, reliable and well priced. I can see why they have such strong Google feedback.”</p>
-              <div class="review-author"><strong>Mark T.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Great service - work completed to a high standard and very reasonable price. Would definitely recommend."</p>
+              <div class="review-author"><strong>Matthew</strong></div>
             </div>
             <div class="review-card">
-              <p>“The team transformed our driveway with precision. Great service, highly skilled and very responsive.”</p>
-              <div class="review-author"><strong>Sophie R.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Extremely competent and professional. Completed the job to a high standard within agreed time scale. Would use again and highly recommended."</p>
+              <div class="review-author"><strong>Vicky Crompton</strong></div>
             </div>
             <div class="review-card">
-              <p>“Very impressed with the workmanship and speed. They kept the site tidy and delivered on schedule.”</p>
-              <div class="review-author"><strong>Paul D.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Johnny re-built our garden wall, he did a fantastic job. He stuck to his original quote and turned up when he said he would. I would 100% recommend and I will be using him again in the future. Thanks"</p>
+              <div class="review-author"><strong>Kelly Norris</strong></div>
             </div>
             <div class="review-card">
-              <p>“Friendly service from start to finish. The pointing job looks excellent and the price was fair.”</p>
-              <div class="review-author"><strong>Emma L.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Really quick response to come and give a quote for the work needed. Jonny was really professional and knowledgeable of what we needed. The quote was a great price and the work carried out to an exceptional standard. Will definitely use this company for future work."</p>
+              <div class="review-author"><strong>Alan Bailey</strong></div>
             </div>
             <div class="review-card">
-              <p>“Great attention to detail on the brickwork. They made sure everything matched the original style.”</p>
-              <div class="review-author"><strong>James K.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Jonny came re pointed the front of my house I’m really pleased with his work very professional and cleaned up everywhere afterwards. Excellent job"</p>
+              <div class="review-author"><strong>Lisa Johnson</strong></div>
             </div>
             <div class="review-card">
-              <p>“Reliable and punctual team. The finished wall looks far better than we expected.”</p>
-              <div class="review-author"><strong>Olivia M.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"So happy with the work Johnny has done for me, my semi detached house was fully pointed for a great price! I would highly recommend Johnny, his work is good, he’s tidy, punctual and finished the job in great time! Thanks Johnny 😁"</p>
+              <div class="review-author"><strong>Vickie Green</strong></div>
             </div>
             <div class="review-card">
-              <p>“Excellent communication through the project. Very pleased with the outcome and finish quality.”</p>
-              <div class="review-author"><strong>Ben W.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Would highly recommend this guy, works very hard does a brilliant job , professional and a friendly guy."</p>
+              <div class="review-author"><strong>Angela Davis</strong></div>
             </div>
             <div class="review-card">
-              <p>“High-quality workmanship and strong project planning. They helped us every step of the way.”</p>
-              <div class="review-author"><strong>Hannah B.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Great job done by JR brickwork. Clean efficient job never stopped working we are delighted and a great bloke to deal with. Would not hesitate to recommend."</p>
+              <div class="review-author"><strong>Martin Loy</strong></div>
             </div>
             <div class="review-card">
-              <p>“I would definitely use JR Brickwork again. They were professional, tidy, and respectful on site.”</p>
-              <div class="review-author"><strong>Michael S.</strong> • Verified Google review</div>
-            </div>
-            <div class="review-card">
-              <p>“Superb service and fast completion time. The team solved a tricky repair without any issues.”</p>
-              <div class="review-author"><strong>Rachel T.</strong> • Verified Google review</div>
-            </div>
-            <div class="review-card">
-              <p>“Excellent quality and value. They fixed our chimney and repointed the whole wall with care.”</p>
-              <div class="review-author"><strong>Dan H.</strong> • Verified Google review</div>
+              <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p>"Highly recommended. Very clear communication and quick reply with quotation. Work carried out exactly as requested and to a very high standard."</p>
+              <div class="review-author"><strong>Steve Matthews</strong></div>
             </div>
           </div>
         </div>
@@ -1841,7 +1890,7 @@ footer {
 </footer>
 
 <script>
-/* ── Brick Background Generator ── */
+/* â”€â”€ Brick Background Generator â”€â”€ */
 const canvas = document.getElementById('brickCanvas');
 const rows = 20;
 for (let r = 0; r < rows; r++) {
@@ -1855,7 +1904,7 @@ for (let r = 0; r < rows; r++) {
   }
 }
 
-/* ── Hero Visual Bricks ── */
+/* â”€â”€ Hero Visual Bricks â”€â”€ */
 const hv = document.getElementById('heroVisual');
 for (let i = 0; i < 45; i++) {
   const b = document.createElement('div');
@@ -1871,7 +1920,7 @@ for (let i = 0; i < 45; i++) {
   hvLeft.appendChild(b);
 }
 
-/* ── Cursor ── */
+/* â”€â”€ Cursor â”€â”€ */
 const cursor = document.getElementById('cursor');
 const trailContainer = document.getElementById('cursor-trail');
 const tailCount = 6;
@@ -1925,7 +1974,7 @@ document.addEventListener('mouseleave', (e) => {
   }
 }, true);
 
-/* ── Dark Mode ── */
+/* â”€â”€ Dark Mode â”€â”€ */
 const html = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = document.getElementById('themeIcon');
@@ -1945,13 +1994,13 @@ if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') 
   setTheme(true);
 }
 
-/* ── Mobile Nav ── */
+/* â”€â”€ Mobile Nav â”€â”€ */
 const mobileNav = document.getElementById('mobileNav');
 const menuToggle = document.getElementById('menuToggle');
 menuToggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
 function closeMobile() { mobileNav.classList.remove('open'); }
 
-/* ── FAQ Accordion ── */
+/* â”€â”€ FAQ Accordion â”€â”€ */
 document.querySelectorAll('.faq-q').forEach(btn => {
   btn.addEventListener('click', () => {
     const item = btn.parentElement;
@@ -1961,7 +2010,7 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   });
 });
 
-/* ── Scroll Reveal ── */
+/* â”€â”€ Scroll Reveal â”€â”€ */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12 });
@@ -1970,7 +2019,7 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   observer.observe(el);
 });
 
-/* ── Portfolio Carousel ── */
+/* â”€â”€ Portfolio Carousel â”€â”€ */
 let currentPortfolioIndex = 0;
 const portfolioItems = document.querySelectorAll('.portfolio-item');
 const totalPortfolioItems = portfolioItems.length;
@@ -1998,7 +2047,7 @@ document.getElementById('portfolioPrev').addEventListener('click', () => {
 // Initialize carousel
 updatePortfolioCarousel();
 
-/* ── Review slider */
+/* â”€â”€ Review slider */
 const reviewCarousel = document.querySelector('.review-carousel');
 const reviewSlides = document.querySelectorAll('.review-card');
 const prevReviewBtn = document.querySelector('.review-prev');
@@ -2061,7 +2110,7 @@ if (reviewCarousel) {
 updateReviewSlider(0);
 startReviewAutoplay();
 
-/* ── Form ── */
+/* â”€â”€ Form â”€â”€ */
 function handleSubmit(e) {
   e.preventDefault();
 }
@@ -2131,4 +2180,5 @@ if (emailButton) emailButton.addEventListener('click', sendQuoteEmail);
 </script>
 </body>
 </html>
+
 
